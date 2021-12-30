@@ -35,13 +35,21 @@ func GenerateSVG(series []float64) *bytes.Buffer {
 				YValues: yAxis,
 				Style: chart.Style{
 					Show:        true,
-					StrokeWidth: 2,
+					StrokeWidth: 5,
 					StrokeColor: selectedColor,
 				},
 			},
 		},
 		Width:  720,
-		Height: 480,
+		Height: 250,
+		Background: chart.Style{
+			StrokeColor: drawing.ColorBlack.WithAlpha(1),
+			FillColor:   drawing.ColorBlack.WithAlpha(1),
+		},
+		Canvas: chart.Style{
+			StrokeColor: drawing.ColorBlack.WithAlpha(1),
+			FillColor:   drawing.ColorBlack.WithAlpha(1),
+		},
 	}
 	buffer := bytes.NewBuffer([]byte{})
 	err := graph.Render(chart.SVG, buffer)
