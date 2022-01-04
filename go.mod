@@ -1,3 +1,4 @@
+// +heroku goVersion go1.16
 module github.com/seenark/poc-svg
 
 go 1.16
