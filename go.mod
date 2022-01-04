@@ -9,9 +9,7 @@ require (
 	github.com/gofiber/fiber/v2 v2.24.0
 	github.com/golang/freetype v0.0.0-20170609003504-e2365dfdc4a0 // indirect
 	github.com/spf13/viper v1.10.1
-	github.com/tdewolff/minify v2.3.6+incompatible
 	github.com/tdewolff/minify/v2 v2.9.26
-	github.com/tdewolff/parse v2.3.4+incompatible // indirect
 	github.com/wcharczuk/go-chart v2.0.1+incompatible
 	go.mongodb.org/mongo-driver v1.8.1
 	golang.org/x/image v0.0.0-20211028202545-6944b10bf410 // indirect

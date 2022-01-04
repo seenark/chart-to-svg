@@ -9,8 +9,8 @@ import (
 	"github.com/seenark/poc-svg/helpers"
 	mychart "github.com/seenark/poc-svg/myChart"
 	"github.com/seenark/poc-svg/repository"
-	"github.com/tdewolff/minify"
-	"github.com/tdewolff/minify/svg"
+	"github.com/tdewolff/minify/v2"
+	"github.com/tdewolff/minify/v2/svg"
 )
 
 var IsRoutineRunning = false
