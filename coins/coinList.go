@@ -225,4 +225,5 @@ var CoinList = []string{
 	"YGGUSDT",
 	"ZECUSDT",
 	"ZENUSDT",
-	"ZILUSDT"}
+	"ZILUSDT",
+}
