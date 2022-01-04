@@ -51,7 +51,7 @@ func main() {
 	handlers.NewKlineHandler(klineGroup, klineRepository)
 	handlers.NewKlineSVGHandler(svgGroup, klineRepository)
 
-	app.Listen(fmt.Sprintf("localhost:%d", cf.Port))
+	app.Listen(fmt.Sprintf(":%d", cf.Port))
 
 }
 func initTimeZone() {
