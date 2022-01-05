@@ -28,24 +28,49 @@ func FetchKlineRoutine(kRepo repository.ICoinKLineRepository, exitChan chan bool
 			min := now.Minute()
 			// fmt.Printf("min: %v\n", min)
 			if min == 0 {
-				all, err := kRepo.GetMultiple([]string{})
-				if err != nil {
-					fmt.Println(err)
-				}
-				for _, sb := range all {
-					err = updateKLineForSymbol(sb.Symbol, kRepo)
-					if err != nil {
-						fmt.Println("Error in Fetch routine", err)
-						continue
-					}
-				}
-				helpers.PrintMemUsage()
-				// time.Sleep(55 * time.Second)
-				time.Sleep(57 * time.Minute)
+				ForceUpdateAllKlines(kRepo)
+				// all, err := kRepo.GetMultiple([]string{})
+				// if err != nil {
+				// 	fmt.Println(err)
+				// }
+				// for _, sb := range all {
+				// 	err = updateKLineForSymbol(sb.Symbol, kRepo)
+				// 	if err != nil {
+				// 		fmt.Println("Error in Fetch routine", err)
+				// 		continue
+				// 	}
+				// }
+				// helpers.PrintMemUsage()
+				time.Sleep(getTimeRemaining() * time.Second)
+				// time.Sleep(57 * time.Minute)
 			}
 		}
 
 	}
+}
+
+func ForceUpdateAllKlines(kRepo repository.ICoinKLineRepository) {
+	all, err := kRepo.GetMultiple([]string{})
+	if err != nil {
+		fmt.Println(err)
+	}
+	for _, sb := range all {
+		err = updateKLineForSymbol(sb.Symbol, kRepo)
+		if err != nil {
+			fmt.Println("Error in Fetch routine", err)
+			continue
+		}
+	}
+	helpers.PrintMemUsage()
+}
+
+func getTimeRemaining() time.Duration {
+	now := time.Now()
+	min := now.Minute()
+	gap := time.Second * 30
+	timeToGo := time.Duration(60-min) - gap
+	fmt.Printf("timeToGo: %v\n", timeToGo)
+	return timeToGo
 }
 
 func StoreHourKLineForSymbol(symbol string, klineCollection repository.ICoinKLineRepository) (*repository.CoinKLine, error) {
@@ -103,13 +128,13 @@ func updateKLineForSymbol(symbol string, klineCollection repository.ICoinKLineRe
 	return nil
 }
 
-func timeLast24H() (start, end int) {
-	now := time.Now()
-	startDate := now.AddDate(0, 0, -1)
-	start = ToMilliseconds(startDate)
-	end = ToMilliseconds(now)
-	return
-}
+// func timeLast24H() (start, end int) {
+// 	now := time.Now()
+// 	startDate := now.AddDate(0, 0, -1)
+// 	start = ToMilliseconds(startDate)
+// 	end = ToMilliseconds(now)
+// 	return
+// }
 
 // helpers
 func ToMilliseconds(t time.Time) int {

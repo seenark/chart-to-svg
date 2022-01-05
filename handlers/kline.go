@@ -70,6 +70,10 @@ func NewKlineSVGHandler(app fiber.Router, klineRepo repository.ICoinKLineReposit
 
 		return c.SendString(fmt.Sprintf("fetch kline routine is %v", running["running"]))
 	})
+	app.Post("/forceUpdate", func(c *fiber.Ctx) error {
+		routine.ForceUpdateAllKlines(klineRepo)
+		return c.SendString("Force-update completed")
+	})
 }
 
 func (kh KLineHandler) create(c *fiber.Ctx) error {
