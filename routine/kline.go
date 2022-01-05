@@ -21,31 +21,9 @@ func FetchKlineRoutine(kRepo repository.ICoinKLineRepository, exitChan chan bool
 		select {
 		case <-exitChan:
 			return
-		default:
-			now := time.Now()
-			// mil := now.Second()
-			// if mil%10 == 0 {
-			min := now.Minute()
-			// fmt.Printf("min: %v\n", min)
-			if min == 0 {
-				ForceUpdateAllKlines(kRepo)
-				// all, err := kRepo.GetMultiple([]string{})
-				// if err != nil {
-				// 	fmt.Println(err)
-				// }
-				// for _, sb := range all {
-				// 	err = updateKLineForSymbol(sb.Symbol, kRepo)
-				// 	if err != nil {
-				// 		fmt.Println("Error in Fetch routine", err)
-				// 		continue
-				// 	}
-				// }
-				// helpers.PrintMemUsage()
-				time.Sleep(getTimeRemaining() * time.Second)
-				// time.Sleep(57 * time.Minute)
-			}
+		case <-time.After(getTimeRemaining()):
+			ForceUpdateAllKlines(kRepo)
 		}
-
 	}
 }
 
@@ -66,9 +44,8 @@ func ForceUpdateAllKlines(kRepo repository.ICoinKLineRepository) {
 
 func getTimeRemaining() time.Duration {
 	now := time.Now()
-	min := now.Minute()
-	gap := time.Second * 30
-	timeToGo := time.Duration(60-min) - gap
+	nextHour := time.Date(now.Year(), now.Month(), now.Day(), now.Hour()+1, 0, 0, 0, now.Location())
+	timeToGo := nextHour.Sub(now)
 	fmt.Printf("timeToGo: %v\n", timeToGo)
 	return timeToGo
 }
